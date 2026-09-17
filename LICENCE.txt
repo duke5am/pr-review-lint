@@ -1,0 +1,131 @@
+AI CODE REVIEW BOT — LICENCE
+============================
+
+Version 1.0
+Applies to every file shipped in this pack ("the Pack"), including the workflow,
+the scripts, the rule files, the documentation, and the test fixture.
+
+
+SUMMARY (not a substitute for the terms below)
+----------------------------------------------
+
+You MAY use the Pack in your own work and in commercial work, including paid
+client work, and you may modify it freely.
+
+You MAY NOT resell, redistribute, or republish the Pack itself, or a
+substantially similar derivative of it, as a product or as part of a product
+whose main value is this Pack.
+
+If in doubt: use it to build things, do not sell it as your own template pack.
+
+
+1. GRANT OF LICENCE
+-------------------
+
+Permission is hereby granted, free of charge, to any person who has legitimately
+obtained a copy of the Pack ("You") to use, copy, modify, merge, publish, and
+distribute the Pack, subject to the conditions in section 2.
+
+This includes, without limitation:
+
+  a. use in your own personal, internal, and commercial projects;
+  b. use by a company or organisation of any size, by any number of employees;
+  c. use in work you perform for a client, including paid client work;
+  d. modification of any file, including the workflow, the engine, and the rule
+     files, to suit your own needs;
+  e. inclusion of modified versions of the engine or workflow inside your own
+     private or public repositories;
+  f. use in a commercial product or service that you sell, where the Pack is a
+     component of a larger product and is not itself the thing being sold.
+
+
+2. CONDITIONS
+-------------
+
+  a. NO RESALE OF THE PACK. You may not sell, resell, sublicense, rent, lease,
+     or redistribute the Pack, or any substantially similar derivative of it, as
+     a standalone product, as a template pack, as a starter kit, as part of a
+     bundle of templates, or as the primary value of any product or service.
+     Selling something you built *with* the Pack is permitted; selling the Pack
+     itself is not.
+
+  b. NO REDISTRIBUTION AS A COMPETING PRODUCT. You may not distribute the Pack,
+     modified or unmodified, on any marketplace, template site, course bundle,
+     or file-sharing service, whether paid or free.
+
+  c. SHARING WITHIN YOUR ORGANISATION IS PERMITTED. You may share the Pack with
+     colleagues, contractors, and employees who work on the same projects as
+     you. You may not share it with people outside your organisation as a
+     standalone resource.
+
+  d. ATTRIBUTION IS APPRECIATED, NOT REQUIRED. You do not need to credit this
+     Pack in your repository, your product, or your documentation.
+
+  e. NOTICE PRESERVATION ON REDISTRIBUTION. If you distribute a modified copy of
+     the engine or workflow within your own organisation or repository, this
+     licence file must remain with it. (This does not apply to your own
+     applications merely because they use code derived from the engine.)
+
+
+3. THIRD PARTY SERVICES
+-----------------------
+
+The Pack does not include, and does not grant you any right to use, any
+third-party service. In particular:
+
+  a. You must supply your own API key for whichever language model provider you
+     configure. Your use of that provider is governed entirely by your own
+     agreement with them.
+
+  b. You are solely responsible for deciding whether transmitting your source
+     code to that provider is acceptable for your organisation, your clients,
+     and any applicable law or regulation, including data protection law and any
+     confidentiality obligations you owe to others. See docs/SECURITY.md.
+
+  c. GitHub Actions, and any other service you use to run the Pack, are governed
+     by your own agreements with those providers.
+
+
+4. NO WARRANTY
+--------------
+
+THE PACK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+The Pack has not been executed on live GitHub infrastructure by its author. The
+language model request shapes have not been validated against a live API by its
+author. See section 6 of docs/SECURITY.md and the "Limits, honestly" section of
+README.md, which form part of this licence by reference.
+
+
+5. LIMITATION OF LIABILITY
+--------------------------
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR
+OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE PACK OR THE USE OR
+OTHER DEALINGS IN THE PACK.
+
+This includes, without limitation, any loss arising from:
+
+  a. reliance on automated review output instead of human review;
+  b. a defect, security issue, or incident that the Pack's rules did not catch;
+  c. the disclosure of source code, secrets, or personal data to a third-party
+     model provider as a result of your configuration;
+  d. any consequence of a prompt-injection attack through repository content;
+  e. any cost incurred with a model provider or CI service.
+
+
+6. ACCEPTANCE
+-------------
+
+By using any part of the Pack, you accept the terms above. If you do not accept
+them, do not use the Pack.
+
+
+7. CONTACT
+----------
+
+For licensing questions, or to report a defect in the Pack, contact the seller
+through the channel you purchased it from.
