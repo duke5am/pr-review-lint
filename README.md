@@ -87,4 +87,4 @@ The paid kit adds the GitHub Actions workflow, `SETUP.md` and `SECURITY.md`, and
 102 tests covering diff parsing, chunking, severity filtering, the noise cap,
 idempotent comment updating and malformed-response rejection.
 
-→ **AI Code Review Bot**: <!-- GUMROAD-LINK -->
+→ More developer tooling like this: **[duke5am.gumroad.com](https://duke5am.gumroad.com)** <!-- GUMROAD-LINK -->
