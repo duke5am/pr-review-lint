@@ -18,11 +18,11 @@ connection -- including by a library that review.py does not know about --
 aborts the child process loudly.
 
 It is a demonstration tool, not a test.  The automated assertions live in
-scripts/test_review.py.
+tests/test_cli.py.
 
 Usage:
-    python3 scripts/prove_offline.py             # uses the bundled fixture
-    python3 scripts/prove_offline.py my.diff     # or any diff of your own
+    python3 prove_offline.py             # uses the bundled fixture
+    python3 prove_offline.py my.diff     # or any diff of your own
 
 It needs no third-party packages and no API key.  It never contacts an LLM.
 """
@@ -37,7 +37,11 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REVIEW = HERE / "review.py"
-CONTENT_ROOT = HERE.parent
+#: The repository root. review.py, fixtures/ and the pr_review_lint package all
+#: sit here. This used to be HERE.parent, which is the directory *containing*
+#: the repo, so the default fixture and the rule glob never resolved and the
+#: script always exited 2 with 'diff not found'.
+CONTENT_ROOT = HERE
 
 #: Injected into the child process with -c.  It installs the block, then runs
 #: review.py as __main__ with the right sys.argv.
@@ -102,12 +106,12 @@ def main() -> int:
     if len(sys.argv) > 1:
         fixture = Path(sys.argv[1]).resolve()
     else:
-        fixture = CONTENT_ROOT / "tests" / "fixtures" / "sample.diff"
+        fixture = CONTENT_ROOT / "fixtures" / "sample.diff"
     if not fixture.is_file():
         print(f"diff not found: {fixture}", file=sys.stderr)
         return 2
 
-    rules = str(CONTENT_ROOT / "rules-example" / "*.md")
+    rules = str(CONTENT_ROOT / "pr_review_lint" / "rules" / "*.md")
 
     # Make sure no credentials are inherited from the environment, so this run
     # cannot be accused of having used one.
@@ -130,8 +134,8 @@ def main() -> int:
 
         banner("CLAIM 1: --dry-run makes no network request")
         dry = run_blocked(["--diff", str(fixture), "--rules", rules, "--dry-run"])
-        print(f"command  : python3 scripts/review.py --diff {fixture.name} "
-              f"--rules 'rules-example/*.md' --dry-run")
+        print(f"command  : python3 review.py --diff {fixture.name} "
+              f"--rules 'pr_review_lint/rules/*.md' --dry-run")
         print(f"exit code: {dry.returncode}")
         if "NETWORK ACCESS ATTEMPTED" in (dry.stdout + dry.stderr):
             print("RESULT   : FAIL -- a network call was attempted")
@@ -162,18 +166,18 @@ def main() -> int:
         # the delimited format.  The stub records every call, so we can also
         # show that no comment was posted to any GitHub URL.
         driver = r'''
-import importlib.util, io, json, sys
+import io, json, os, sys
 from contextlib import redirect_stderr, redirect_stdout
-from pathlib import Path
 
-review_path = Path(sys.argv[1])
-rules = sys.argv[2]
-fixture = sys.argv[3]
+# Import the implementation module itself (the CLI lives in
+# pr_review_lint/cli.py). Loading review.py and patching an attribute on it
+# would patch the wrapper that only re-exports main(), leaving the real code
+# untouched - the run would then call the live API instead of the stub.
+sys.path.insert(0, os.getcwd())
+import pr_review_lint.cli as rev
 
-spec = importlib.util.spec_from_file_location("rev", review_path)
-rev = importlib.util.module_from_spec(spec)
-sys.modules["rev"] = rev
-spec.loader.exec_module(rev)
+rules = sys.argv[1]
+fixture = sys.argv[2]
 
 CALLS = []
 
@@ -210,7 +214,7 @@ print("GITHUB_CALLS:", len(github_calls))
         try:
             driver_file.write_text(driver, encoding="utf-8")
             proc = subprocess.run(
-                [sys.executable, "-B", str(driver_file), str(REVIEW), rules, str(fixture)],
+                [sys.executable, "-B", str(driver_file), rules, str(fixture)],
                 capture_output=True,
                 text=True,
                 cwd=str(CONTENT_ROOT),

@@ -1,13 +1,24 @@
 # pr-review-lint
 
+[![PyPI](https://img.shields.io/pypi/v/pr-review-lint)](https://pypi.org/project/pr-review-lint/)
+
 A first-pass pull-request review driven by **your team's own written rules** — and
 a dry-run mode that shows you exactly what it would post before it posts anything.
 
 No dependencies. Standard library only.
 
 ```bash
+pip install pr-review-lint             # from PyPI, Python 3.9+
+pr-review-lint --diff pr.diff --rules 'rules/*.md' --dry-run
+
+# or straight from a clone, no install:
 python3 review.py --diff pr.diff --rules 'rules/*.md' --dry-run
 ```
+
+With no `--rules`, the four example rule files bundled in the package are used, so
+`pr-review-lint --diff pr.diff --dry-run` works from any directory. Your own
+`rules/*.md` next to the working directory always takes precedence, and an
+explicit `--rules` / `RULES_GLOB` overrides both.
 
 ```
 [review] 10 file(s) in diff, 5 to review, 5 skipped, 1 chunk(s)
@@ -45,18 +56,23 @@ produces findings nobody can act on.
 
 ## Rules are yours, in markdown
 
-`rules/` holds four example rule files — scope discipline, security red flags,
-testing expectations, operational readiness. They are plain markdown, so changing
-what the reviewer cares about is a documentation edit, not a code change.
+`pr_review_lint/rules/` holds four example rule files — scope discipline, security
+red flags, testing expectations, operational readiness. They are plain markdown, so
+changing what the reviewer cares about is a documentation edit, not a code change.
+They ship inside the installed package, which is why the console script works with
+no `--rules` at all.
 
 This is the difference between a linter and a reviewer: a linter knows syntax, and
 your rules know your architecture.
 
 ## Dry-run is the default workflow
 
-`--dry-run` and `--plan-only` make **no network call at all** — verified. Use them
-to tune the threshold and the cap against a real PR before enabling it, because a
-reviewer that is too noisy on day one never gets a second chance.
+`--dry-run` and `--plan-only` make **no network call at all** — verified by
+`python3 prove_offline.py`, which runs the real CLI in a child process with
+`socket.socket` replaced by a subclass that raises on `connect`, and also checks
+that malformed model output is rejected with exit code 4 and zero GitHub calls.
+Use them to tune the threshold and the cap against a real PR before enabling it,
+because a reviewer that is too noisy on day one never gets a second chance.
 
 ## Malformed output is rejected, not posted
 

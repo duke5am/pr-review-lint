@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pr-review-lint"
+version = "0.1.0"
+description = "First-pass pull-request review driven by your own markdown rules, with a dry run that shows exactly what it would post before it posts anything"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENCE.txt"]
+authors = [{ name = "duke5am" }]
+keywords = [
+  "code-review", "pull-request", "pr-review", "review-bot", "automation",
+  "llm", "ci", "lint", "markdown-rules",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Version Control :: Git",
+]
+# Standard library only, and that is a selling point: urllib.request is used for
+# both the model API and the GitHub API, so no HTTP client is required. Nothing
+# here should ever gain a dependency without a very good reason.
+dependencies = []
+
+[project.scripts]
+pr-review-lint = "pr_review_lint.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/duke5am/pr-review-lint"
+Issues = "https://github.com/duke5am/pr-review-lint/issues"
+
+[tool.setuptools]
+packages = ["pr_review_lint"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+pr_review_lint = ["rules/*.md"]
